@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "name": "windows-gcc-x64",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "C:/app/msys64/mingw64/include/**",
+        "C:/app/msys64/mingw64/include/gstreamer-1.0/**",
+        "C:/app/msys64/mingw64/lib/glib-2.0/include/**"
+      ],
+      "compilerPath": "C:/app/msys64/mingw64/bin/gcc.exe",
+      "cStandard": "${default}",
+      "cppStandard": "${default}",
+      "intelliSenseMode": "gcc-x64",
+      "compilerArgs": [""]
+    }
+  ],
+  "version": 4
+}
