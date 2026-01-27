@@ -52,7 +52,10 @@ int main(int argc, char *argv[])
 
     /* Set the URI to play */
     g_object_set(data.playbin, "uri", "https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_cropped_multilingual.webm", NULL);
-
+    // 额外添加字幕流（媒体文件本身就包含了多个字幕流，通过suburi属性设置的字幕流将会被加入字幕列表中并成为当前选中的字幕。）
+    g_object_set(data.playbin, "suburi", "https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer_gr.srt", NULL);
+    // subtitle-font-desc属性值的格式是：[FAMILY-LIST（字体）] [STYLE-OPTIONS（字体属性）] [SIZE（字号）]
+    g_object_set(data.playbin, "subtitle-font-desc", "Sans, 18", NULL);
     /* Set flags to show Audio and Video but ignore Subtitles */
     g_object_get(data.playbin, "flags", &flags, NULL); // 获取flags默认值
     // 使用音频和视频，取消字幕，其他值保留默认值
@@ -280,6 +283,12 @@ static gboolean handle_keyboard(GIOChannel *source, GIOCondition cond, CustomDat
             // 延迟取决于容器中流的特定多路复用和playbin的内部queue的长度（这取决于网络状况）。
             g_print("Setting current audio stream to %d\n", index);
             g_object_set(data->playbin, "current-audio", index, NULL);
+
+            // 修改字幕/视频流同理
+            // g_print("Setting current text stream to %d\n", index);
+            // g_object_set(data->playbin, "current-text", index, NULL);
+            // g_print("Setting current video stream to %d\n", index);
+            // g_object_set(data->playbin, "current-video", index, NULL);
         }
     }
     g_free(str);
