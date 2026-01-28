@@ -29,9 +29,13 @@ int main(int argc, char *argv[])
     bin = gst_bin_new("audio_sink_bin");
     gst_bin_add_many(GST_BIN(bin), equalizer, convert, sink, NULL);
     gst_element_link_many(equalizer, convert, sink, NULL);
+    // 获取 equalizer.sink_pad
     pad = gst_element_get_static_pad(equalizer, "sink");
+    // 创建ghost_pad, 名为sink、实际指向equalizer.sink_pad
     ghost_pad = gst_ghost_pad_new("sink", pad);
+    // 激活ghost_pad
     gst_pad_set_active(ghost_pad, TRUE);
+    // 添加到bin
     gst_element_add_pad(bin, ghost_pad);
     gst_object_unref(pad);
 
